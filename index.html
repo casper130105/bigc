@@ -6,124 +6,139 @@
 <title>Big C</title>
 <meta name="description" content="Big C: plan a road-bike loop with headwind out and tailwind home, and put your club's training schedule on intervals.icu.">
 <meta name="theme-color" content="#000000">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23000'/%3E%3Cpath d='M22.5 9.5A9 9 0 1 0 22.5 22.5' fill='none' stroke='%238052ff' stroke-width='4' stroke-linecap='round'/%3E%3Cpath d='M18.5 13.5A3.5 3.5 0 1 0 18.5 18.5' fill='none' stroke='%23ffb829' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23000'/%3E%3Cpath d='M22.5 9.5A9 9 0 1 0 22.5 22.5' fill='none' stroke='%23fff' stroke-width='4' stroke-linecap='round'/%3E%3Cpath d='M18.5 13.5A3.5 3.5 0 1 0 18.5 18.5' fill='none' stroke='%230088ff' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
 <style>
 :root {
-  --void: #000000; --white: #ffffff; --ash: #9a9a9a; --mist: #bdbdbd;
-  --iris: #8052ff; --saffron: #ffb829; --verdant: #15846e;
+  --midnight: #000000; --obsidian: #0f0f10; --charcoal: #1c1d1f; --white: #ffffff;
+  --ash: #888b91; --mist: #b8babf; --pearl: #cccccc;
+  --signal: #0088ff; --sky: #60a5fa;
+  --navy: #001b33; --indigo: #030719;
+  --hair: rgba(255, 255, 255, 0.12);
+  --aurora: linear-gradient(#000000 0.85%, #112d72 33.4%, #4b52aa 49.68%, #a887dc 70.84%, #e6c4e7 95.8%, #fcdbef 107.19%);
   --font: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; }
-body { background: var(--void); color: var(--white); font: 200 18px/1.5 var(--font); font-feature-settings: "ss01" on; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+body { background: var(--midnight); color: var(--white); font: 400 16px/1.5 var(--font); letter-spacing: -0.01em; font-feature-settings: "ss01" on, "cv11" on; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 a { color: inherit; }
-.page { max-width: 1280px; margin: 0 auto; padding: 0 max(16px, env(safe-area-inset-left)) 0 max(16px, env(safe-area-inset-right)); }
-@media (min-width: 720px) { .page { padding-inline: 36px; } }
+a:focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; border-radius: 9px; }
+.page { max-width: 1232px; margin: 0 auto; padding: 0 max(16px, env(safe-area-inset-right)) 0 max(16px, env(safe-area-inset-left)); }
 
-/* Nav */
-nav { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: max(18px, env(safe-area-inset-top)) 0 18px; }
-.logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font: 400 20px/1 var(--font); letter-spacing: -0.02em; }
-.logo svg { width: 28px; height: 28px; flex: none; }
-.links { display: flex; gap: 24px; }
-.links a { font: 600 14px/1.2 var(--font); letter-spacing: 0.025em; text-transform: uppercase; color: var(--ash); text-decoration: none; transition: color .15s; }
-.links a:hover, .links a:focus-visible { color: var(--white); }
-@media (max-width: 560px) { .links { gap: 14px; } .links a { font-size: 12px; } .links .long { display: none; } }
+/* Floating nav pill */
+.navwrap { display: flex; justify-content: center; padding: max(16px, env(safe-area-inset-top)) 0 16px; }
+nav { display: flex; align-items: center; gap: 4px; padding: 6px 6px 6px 14px; border-radius: 9999px; background: var(--obsidian); border: 1px solid var(--hair); max-width: 100%; }
+.logo { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font: 500 15px/1 var(--font); letter-spacing: -0.02em; margin-right: 10px; }
+.logo svg { width: 22px; height: 22px; flex: none; }
+nav .link { font: 400 14px/1 var(--font); color: var(--ash); text-decoration: none; padding: 8px 10px; border-radius: 9999px; transition: color .15s; white-space: nowrap; }
+nav .link:hover { color: var(--white); }
+nav .cta { font: 500 13px/1 var(--font); background: var(--white); color: #000; text-decoration: none; padding: 8px 14px; border-radius: 9999px; margin-left: 4px; white-space: nowrap; }
+@media (max-width: 520px) { nav .long { display: none; } nav .link { padding: 8px 7px; } .logo { margin-right: 4px; } }
 
-/* Hero */
-.hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); align-items: center; gap: 36px; min-height: min(820px, calc(100svh - 70px)); padding: 36px 0 60px; }
-.label { display: block; font: 600 14px/1.2 var(--font); letter-spacing: 0.025em; text-transform: uppercase; color: var(--saffron); margin: 0 0 18px; }
-h1 { font: 400 clamp(52px, 8.4vw, 113px)/1.0 var(--font); letter-spacing: -0.04em; margin: 0 0 30px; }
-.lede { max-width: 480px; margin: 0 0 36px; }
-.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 24px; }
-.btn { display: inline-flex; align-items: center; gap: 8px; background: var(--iris); color: var(--white); text-decoration: none; font: 600 14px/1 var(--font); letter-spacing: 0.025em; text-transform: uppercase; padding: 15px 20px; border-radius: 24px; transition: filter .15s; }
-.btn:hover { filter: brightness(1.12); }
-.ghost { font: 400 15px/1.2 var(--font); color: var(--white); text-decoration: none; border-bottom: 1px solid var(--ash); padding-bottom: 3px; transition: border-color .15s, color .15s; }
-.ghost:hover { border-color: var(--saffron); color: var(--saffron); }
-a:focus-visible { outline: 2px solid var(--iris); outline-offset: 4px; border-radius: 6px; }
-.viz { position: relative; width: 100%; aspect-ratio: 1; }
-.viz canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-.hero .viz { max-width: 640px; justify-self: end; }
+/* Aurora hero card */
+.hero { position: relative; overflow: hidden; border-radius: 24px; background: var(--aurora); min-height: min(760px, calc(100svh - 90px)); display: grid; place-items: center; text-align: center; padding: 112px 32px 160px; box-shadow: rgba(255, 255, 255, 0.08) 0 0 0 1px inset; }
+.hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.hero .inner { position: relative; max-width: 680px; }
+.chip { display: inline-block; font: 500 12px/1 var(--font); letter-spacing: 0.02em; color: var(--mist); padding: 7px 12px; border-radius: 9999px; background: rgba(0, 0, 0, 0.35); box-shadow: rgba(255, 255, 255, 0.14) 0 0 0 1px inset; margin-bottom: 24px; }
+h1 { font: 500 clamp(40px, 6.4vw, 60px)/1.06 var(--font); letter-spacing: -0.057em; margin: 0 0 20px; }
+.lede { font-size: 18px; letter-spacing: -0.01em; color: rgba(255, 255, 255, 0.86); text-shadow: 0 1px 12px rgba(3, 7, 25, 0.5); max-width: 520px; margin: 0 auto 32px; }
+.actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; font: 500 15px/1 var(--font); text-decoration: none; padding: 12px 18px; border-radius: 9px; transition: background .15s, color .15s; }
+.btn.white { background: var(--white); color: #000; }
+.btn.white:hover { background: #e5e7eb; }
+.btn.dark { background: var(--charcoal); color: var(--white); box-shadow: rgba(255, 255, 255, 0.15) 0 0 0 1px inset; }
+.btn.dark:hover { background: #26272a; }
+.fine { margin: 18px 0 0; font-size: 13px; color: rgba(255, 255, 255, 0.86); text-shadow: 0 1px 10px rgba(3, 7, 25, 0.5); }
 
-/* Feature sections */
-.feature { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: 60px; padding: 96px 0; }
+/* Feature cards */
+.features { display: grid; gap: 16px; padding: 16px 0 0; }
+.feature { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: 48px; padding: 48px; border-radius: 24px; box-shadow: rgba(255, 255, 255, 0.08) 0 0 0 1px inset; }
+.feature.navy { background: var(--navy); }
+.feature.indigo { background: var(--indigo); }
 .feature.flip .viz { order: 2; }
-h2 { font: 400 clamp(40px, 5.6vw, 78px)/1.05 var(--font); letter-spacing: -0.04em; margin: 0 0 24px; }
-.feature p { color: var(--mist); max-width: 520px; margin: 0 0 30px; }
-.feature .viz { aspect-ratio: 4 / 3; }
-.facts { list-style: none; padding: 0; margin: 0 0 36px; display: grid; gap: 6px; font: 400 15px/1.4 var(--font); color: var(--ash); }
-.facts li::before { content: ""; display: inline-block; width: 9px; height: 9px; border: 1.6px solid var(--saffron); border-right-color: transparent; border-radius: 50%; margin-right: 12px; vertical-align: 0; }
+.label { display: block; font: 500 13px/1.2 var(--font); letter-spacing: 0; color: var(--signal); margin: 0 0 14px; }
+h2 { font: 500 clamp(30px, 4vw, 48px)/1.07 var(--font); letter-spacing: -0.05em; margin: 0 0 18px; }
+.feature p { color: var(--mist); max-width: 520px; margin: 0 0 24px; }
+.facts { list-style: none; padding: 0; margin: 0 0 32px; display: grid; gap: 8px; font-size: 15px; color: var(--pearl); }
+.facts li::before { content: ""; display: inline-block; width: 9px; height: 9px; border: 1.6px solid var(--signal); border-right-color: transparent; border-radius: 50%; margin-right: 12px; vertical-align: 0; }
+.more { font: 500 15px/1.2 var(--font); color: var(--sky); text-decoration: none; transition: color .15s; }
+.more:hover { color: var(--white); }
+.viz { position: relative; width: 100%; aspect-ratio: 4 / 3; }
+.viz canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 
-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding: 60px 0 max(36px, env(safe-area-inset-bottom)); font: 400 14px/1.4 var(--font); color: var(--ash); }
+footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding: 48px 8px max(32px, env(safe-area-inset-bottom)); font-size: 13px; color: var(--ash); }
 footer a { text-decoration: none; } footer a:hover { color: var(--white); }
 
 @media (max-width: 860px) {
-  .hero { grid-template-columns: 1fr; min-height: 0; padding-top: 12px; gap: 12px; }
-  .hero .viz { order: -1; max-width: 420px; justify-self: center; width: 86%; }
-  .feature { grid-template-columns: 1fr; gap: 30px; padding: 60px 0; }
+  .hero { padding: 72px 20px 120px; min-height: 0; }
+  .feature { grid-template-columns: 1fr; gap: 24px; padding: 24px; }
   .feature.flip .viz { order: 0; }
 }
 </style>
 </head>
 <body>
 <div class="page">
-  <nav aria-label="Main">
-    <a class="logo" href="/" aria-label="Big C home">
-      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M22.5 9.5A9 9 0 1 0 22.5 22.5" fill="none" stroke="#8052ff" stroke-width="4" stroke-linecap="round"/><path d="M18.5 13.5A3.5 3.5 0 1 0 18.5 18.5" fill="none" stroke="#ffb829" stroke-width="2.6" stroke-linecap="round"/></svg>
-      Big C
-    </a>
-    <div class="links">
-      <a href="/windoptimizer/">Wind<span class="long"> optimizer</span></a>
-      <a href="/trainingsschema/">Training<span class="long"> schedule</span></a>
-    </div>
-  </nav>
+  <div class="navwrap">
+    <nav aria-label="Main">
+      <a class="logo" href="/" aria-label="Big C home">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M22.5 9.5A9 9 0 1 0 22.5 22.5" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/><path d="M18.5 13.5A3.5 3.5 0 1 0 18.5 18.5" fill="none" stroke="#0088ff" stroke-width="2.6" stroke-linecap="round"/></svg>
+        Big C
+      </a>
+      <a class="link" href="/windoptimizer/">Wind<span class="long"> optimizer</span></a>
+      <a class="link" href="/trainingsschema/">Schedule</a>
+      <a class="cta" href="/windoptimizer/">Plan a ride</a>
+    </nav>
+  </div>
 
   <main>
     <section class="hero">
-      <div>
-        <span class="label">Big C 2.0</span>
+      <canvas data-shape="aurora" aria-hidden="true"></canvas>
+      <div class="inner">
+        <span class="chip">Big C 2.0</span>
         <h1>Small tools for long training days.</h1>
-        <p class="lede">Plan a road-bike loop around the wind, and put the club’s training schedule straight onto intervals.icu. Free, in your browser, no account needed.</p>
+        <p class="lede">Plan a road-bike loop around the wind, and put the club’s training schedule straight onto intervals.icu.</p>
         <div class="actions">
-          <a class="btn" href="/windoptimizer/">Plan a ride</a>
-          <a class="ghost" href="/trainingsschema/">Sync a training schedule</a>
+          <a class="btn white" href="/windoptimizer/">Plan a ride</a>
+          <a class="btn dark" href="/trainingsschema/">Sync a schedule</a>
         </div>
-      </div>
-      <div class="viz" aria-hidden="true"><canvas data-shape="c"></canvas></div>
-    </section>
-
-    <section class="feature" aria-labelledby="wind-h">
-      <div class="viz" aria-hidden="true"><canvas data-shape="wind"></canvas></div>
-      <div>
-        <span class="label">Wind optimizer</span>
-        <h2 id="wind-h">Headwind out, tailwind home.</h2>
-        <p>Pick a start, a distance and a time. Big C reads the wind forecast and plans a loop over popular road-bike roads and fietssnelwegen, so the hard part comes first and the wind pushes you home.</p>
-        <ul class="facts">
-          <li>Hour-by-hour wind for the next three days</li>
-          <li>Speed estimate from your power and riding position</li>
-          <li>Download the route as GPX</li>
-        </ul>
-        <a class="ghost" href="/windoptimizer/">Open the wind optimizer →</a>
+        <p class="fine">Free, in your browser, no account needed.</p>
       </div>
     </section>
 
-    <section class="feature flip" aria-labelledby="sched-h">
-      <div class="viz" aria-hidden="true"><canvas data-shape="grid"></canvas></div>
-      <div>
-        <span class="label">Training schedule</span>
-        <h2 id="sched-h">The club schedule, on your calendar.</h2>
-        <p>Drop the training schedule PDF and every session lands on your intervals.icu calendar: rowing, bike and strength, with the races marked. Upload a newer schedule and it updates instead of doubling up.</p>
-        <ul class="facts">
-          <li>Check every session before anything is sent</li>
-          <li>Your key goes only from your browser to intervals.icu</li>
-          <li>Works for every rower with their own account</li>
-        </ul>
-        <a class="ghost" href="/trainingsschema/">Sync your schedule →</a>
-      </div>
-    </section>
+    <div class="features">
+      <section class="feature navy" aria-labelledby="wind-h">
+        <div class="viz" aria-hidden="true"><canvas data-shape="wind"></canvas></div>
+        <div>
+          <span class="label">Wind optimizer</span>
+          <h2 id="wind-h">Headwind out, tailwind home.</h2>
+          <p>Pick a start, a distance and a time. Big C reads the wind forecast and plans a loop over popular road-bike roads and fietssnelwegen, so the hard part comes first and the wind pushes you home.</p>
+          <ul class="facts">
+            <li>Hour-by-hour wind for the next three days</li>
+            <li>Speed estimate from your power and riding position</li>
+            <li>Download the route as GPX</li>
+          </ul>
+          <a class="more" href="/windoptimizer/">Open the wind optimizer ›</a>
+        </div>
+      </section>
+
+      <section class="feature indigo flip" aria-labelledby="sched-h">
+        <div class="viz" aria-hidden="true"><canvas data-shape="grid"></canvas></div>
+        <div>
+          <span class="label">Training schedule</span>
+          <h2 id="sched-h">The club schedule, on your calendar.</h2>
+          <p>Drop the training schedule PDF and every session lands on your intervals.icu calendar: rowing, bike and strength, with the races marked. Upload a newer schedule and it updates instead of doubling up.</p>
+          <ul class="facts">
+            <li>Check every session before anything is sent</li>
+            <li>Your key goes only from your browser to intervals.icu</li>
+            <li>Works for every rower with their own account</li>
+          </ul>
+          <a class="more" href="/trainingsschema/">Sync your schedule ›</a>
+        </div>
+      </section>
+    </div>
   </main>
 
   <footer>
@@ -133,36 +148,41 @@ footer a { text-decoration: none; } footer a:hover { color: var(--white); }
 </div>
 
 <script>
-// Constellation: small outlined c's drifting around points sampled from a shape.
+// Floating c's: small outlined c's drifting around points sampled from a shape.
 (() => {
-  const COLORS = ["#8052ff", "#a68aff", "#ffb829", "#15846e", "#2fc4a0", "#ff5cc8", "#5b8cff", "#ffffff"];
-  const WEIGHTS = [5, 3, 3, 2, 2, 1.4, 2, 0.6];
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  function pickColor(rnd) {
-    const total = WEIGHTS.reduce((a, b) => a + b, 0);
+  // Per-scene palettes as [color, weight]. The aurora picks light marks on the dark top
+  // of the gradient and deep marks on the light bottom, so the c's stay visible everywhere.
+  const PALETTES = {
+    auroraTop: [["#ffffff", 4], ["#60a5fa", 3], ["#0088ff", 2], ["#a887dc", 2.5], ["#e6c4e7", 1.2]],
+    auroraLow: [["#112d72", 4], ["#030719", 2], ["#4b52aa", 2], ["#ffffff", 1.4]],
+    wind: [["#0088ff", 5], ["#60a5fa", 3], ["#ffffff", 1.6], ["#4b52aa", 1.2]],
+    grid: [["#0088ff", 5], ["#60a5fa", 2.5], ["#888b91", 1.6], ["#4b52aa", 1.2]],
+  };
+  function pick(pal, rnd) {
+    const total = pal.reduce((a, c) => a + c[1], 0);
     let r = rnd() * total;
-    for (let i = 0; i < COLORS.length; i++) { r -= WEIGHTS[i]; if (r <= 0) return COLORS[i]; }
-    return COLORS[0];
+    for (const [c, w] of pal) { r -= w; if (r <= 0) return c; }
+    return pal[0][0];
   }
   function rng(seed) { return () => (seed = (seed * 16807) % 2147483647) / 2147483647; }
   function gauss(rnd) { return (rnd() + rnd() + rnd() - 1.5) / 1.5; }
 
-  // Each shape returns targets in unit space (0..1, 0..h) for n particles.
+  // Each shape returns targets in unit space (x 0..1, y 0..h where h = height/width).
   const SHAPES = {
-    c(n, rnd) {
-      const out = [];
+    aurora(n, rnd, h) {
+      // A big open C around the headline, plus c's rising slowly through the whole card.
+      const out = [], cx = 0.5, cy = h * 0.47, R = Math.min(0.36, h * 0.4);
       for (let i = 0; i < n; i++) {
-        if (rnd() < 0.12) { out.push({ x: rnd(), y: rnd(), amb: true }); continue; }
-        const a = (0.22 + rnd() * 1.56) * Math.PI;           // open to the right
-        const r = 0.29 + Math.abs(gauss(rnd)) * 0.13 + rnd() * 0.02;
-        out.push({ x: 0.5 + Math.cos(a) * r, y: 0.5 - Math.sin(a) * r });
+        if (rnd() < 0.34) { out.push({ x: rnd(), y: rnd() * h, amb: true, rise: 0.00012 + rnd() * 0.0003 }); continue; }
+        const a = (0.24 + rnd() * 1.52) * Math.PI;
+        const r = R * (0.86 + Math.abs(gauss(rnd)) * 0.3);
+        out.push({ x: cx + Math.cos(a) * r, y: cy - Math.sin(a) * r });
       }
       return out;
     },
     wind(n, rnd, h) {
-      const out = [];
-      const lanes = 7;
+      const out = [], lanes = 7;
       for (let i = 0; i < n; i++) {
         if (rnd() < 0.1) { out.push({ x: rnd(), y: rnd() * h, amb: true }); continue; }
         const lane = Math.floor(rnd() * lanes);
@@ -175,8 +195,7 @@ footer a { text-decoration: none; } footer a:hover { color: var(--white); }
       const cols = 7, rows = 4, pad = 0.05, gap = 0.032;
       const cw = (1 - pad * 2 - gap * (cols - 1)) / cols;
       const ch = (h - pad * 2 - gap * (rows - 1)) / rows;
-      const busy = rng(7);
-      const cells = [];
+      const busy = rng(7), cells = [];
       for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
         const v = busy();
         cells.push({ c, r, w: v < 0.14 ? 0.15 : v < 0.24 ? 2.2 : 1, race: r === 3 && c === 5 || r === 1 && c === 6 });
@@ -187,14 +206,13 @@ footer a { text-decoration: none; } footer a:hover { color: var(--white); }
         let t = rnd() * total, cell = cells[0];
         for (const c of cells) { t -= c.w; if (t <= 0) { cell = c; break; } }
         const x0 = pad + cell.c * (cw + gap), y0 = pad + cell.r * (ch + gap);
-        const edge = rnd() < 0.8;
         let x, y;
-        if (edge) { // trace the cell outline
+        if (rnd() < 0.8) { // trace the cell outline
           const s = rnd() * 4;
           if (s < 1) { x = x0 + s * cw; y = y0; } else if (s < 2) { x = x0 + cw; y = y0 + (s - 1) * ch; }
           else if (s < 3) { x = x0 + (3 - s) * cw; y = y0 + ch; } else { x = x0; y = y0 + (4 - s) * ch; }
         } else { x = x0 + cw * (0.25 + rnd() * 0.5); y = y0 + ch * (0.35 + rnd() * 0.3); }
-        out.push({ x, y, color: cell.race ? "#ffb829" : null });
+        out.push({ x, y, color: cell.race ? "#ffffff" : null });
       }
       return out;
     },
@@ -205,6 +223,13 @@ footer a { text-decoration: none; } footer a:hover { color: var(--white); }
     const kind = canvas.dataset.shape;
     let w = 0, h = 0, dpr = 1, parts = [], running = false, raf = 0, t0 = performance.now();
     const pointer = { x: -1e4, y: -1e4 };
+    const host = canvas.parentElement;
+
+    function colorFor(p, rnd, hu) {
+      if (p.color) return p.color;
+      if (kind !== "aurora") return pick(PALETTES[kind], rnd);
+      return pick(p.y / hu > 0.64 ? PALETTES.auroraLow : PALETTES.auroraTop, rnd);
+    }
 
     function build() {
       const rect = canvas.getBoundingClientRect();
@@ -214,16 +239,18 @@ footer a { text-decoration: none; } footer a:hover { color: var(--white); }
       canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       const rnd = rng(kind.length * 9973 + 11);
-      const n = Math.round(Math.min(1400, Math.max(380, w * h / (kind === "c" ? 140 : 190))));
-      parts = SHAPES[kind](n, rnd, h / w).map(p => ({
+      const per = kind === "aurora" ? 230 : 190;
+      const n = Math.round(Math.min(1500, Math.max(380, w * h / per)));
+      const hu = h / w;
+      parts = SHAPES[kind](n, rnd, hu).map(p => ({
         ...p,
         s: ((p.amb ? 1.6 : 2) + rnd() * (p.amb ? 2.2 : 3.4)) * (kind === "grid" ? 0.7 : 1),
         rot: (rnd() - 0.5) * 0.7,          // small tilt so every mark still reads as a "c"
         spin: 0.4 + rnd() * 0.9,           // wobble speed
         drift: 0.004 + rnd() * 0.01,
         ph: rnd() * Math.PI * 2,
-        color: p.color || pickColor(rnd),
-        alpha: p.amb ? 0.25 + rnd() * 0.3 : 0.55 + rnd() * 0.45,
+        color: colorFor(p, rnd, hu),
+        alpha: p.amb ? 0.25 + rnd() * 0.3 : 0.5 + rnd() * 0.45,
         ox: 0, oy: 0,
       }));
     }
@@ -239,7 +266,7 @@ footer a { text-decoration: none; } footer a:hover { color: var(--white); }
       const t = (now - t0) / 1000;
       ctx.clearRect(0, 0, w, h);
       ctx.lineWidth = 1.25; ctx.lineCap = "round";
-      const byColor = new Map();
+      const hu = h / w, groups = new Map();
       for (const p of parts) {
         let x, y;
         if (p.flow) {
@@ -247,6 +274,7 @@ footer a { text-decoration: none; } footer a:hover { color: var(--white); }
           x = (p.x - 0.04) * w;
           y = (p.ly + Math.sin(p.x * 6.5 + p.phase + t * 0.35) * 0.035) * w;
         } else {
+          if (p.rise && !reduce) { p.y -= p.rise; if (p.y < -0.02) p.y = hu + 0.02; }
           const j = kind === "grid" ? 1.2 : 3;
           x = p.x * w + Math.sin(t * p.drift * 60 + p.ph) * j;
           y = p.y * w + Math.cos(t * p.drift * 52 + p.ph) * j;
@@ -257,11 +285,14 @@ footer a { text-decoration: none; } footer a:hover { color: var(--white); }
         const ty = d2 < 9000 ? dy / Math.sqrt(d2 + 1) * (9000 - d2) / 300 : 0;
         p.ox += (tx - p.ox) * 0.08; p.oy += (ty - p.oy) * 0.08;
         const r = p.rot + (reduce ? 0 : Math.sin(t * p.spin + p.ph) * 0.35);
-        const key = p.color + "|" + (Math.round(p.alpha * 4) / 4);
-        if (!byColor.has(key)) byColor.set(key, []);
-        byColor.get(key).push([x + p.ox, y + p.oy, p.s, r]);
+        // rising aurora marks take the colour of the band they are in
+        let color = p.color;
+        if (p.rise) color = p.y / hu > 0.64 ? (p.ph < 3.4 ? "#112d72" : "#4b52aa") : (p.ph < 2.2 ? "#ffffff" : p.ph < 4.4 ? "#60a5fa" : "#a887dc");
+        const key = color + "|" + (Math.round(p.alpha * 4) / 4);
+        if (!groups.has(key)) groups.set(key, []);
+        groups.get(key).push([x + p.ox, y + p.oy, p.s, r]);
       }
-      for (const [key, list] of byColor) {
+      for (const [key, list] of groups) {
         const [color, a] = key.split("|");
         ctx.strokeStyle = color; ctx.globalAlpha = +a;
         ctx.beginPath();
@@ -278,11 +309,11 @@ footer a { text-decoration: none; } footer a:hover { color: var(--white); }
     build(); draw(performance.now());
     new ResizeObserver(() => { build(); draw(performance.now()); }).observe(canvas);
     new IntersectionObserver(([e]) => (e.isIntersecting ? start() : stop())).observe(canvas);
-    canvas.parentElement.addEventListener("pointermove", e => {
+    host.addEventListener("pointermove", e => {
       const r = canvas.getBoundingClientRect(); pointer.x = e.clientX - r.left; pointer.y = e.clientY - r.top;
       if (reduce) draw(performance.now());
     });
-    canvas.parentElement.addEventListener("pointerleave", () => { pointer.x = pointer.y = -1e4; });
+    host.addEventListener("pointerleave", () => { pointer.x = pointer.y = -1e4; });
   }
 
   document.querySelectorAll("canvas[data-shape]").forEach(setup);

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Big C: wind optimizer</title>
 <meta name="description" content="Big C 2.0 plans a road-bike loop over popular road-bike roads and fietssnelwegen, with headwind on the way out and tailwind home. Download it as GPX.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23000'/%3E%3Cpath d='M22.5 9.5A9 9 0 1 0 22.5 22.5' fill='none' stroke='%238052ff' stroke-width='4' stroke-linecap='round'/%3E%3Cpath d='M18.5 13.5A3.5 3.5 0 1 0 18.5 18.5' fill='none' stroke='%23ffb829' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23000'/%3E%3Cpath d='M22.5 9.5A9 9 0 1 0 22.5 22.5' fill='none' stroke='%23fff' stroke-width='4' stroke-linecap='round'/%3E%3Cpath d='M18.5 13.5A3.5 3.5 0 1 0 18.5 18.5' fill='none' stroke='%230088ff' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap">
@@ -268,62 +268,69 @@ footer { margin-top: auto; font-size: .78rem; color: var(--muted); border-top: 1
 }
 </style>
 <style id="void-theme">
-/* Big C void theme: black canvas, one violet action colour, amber labels, Inter. Overrides the tokens above. */
+/* Big C aurora theme: black canvas, white action fill, one electric blue accent, Inter. Overrides the tokens above. */
 :root:not(#v), :root:not(#v)[data-theme] {
-  --bg: #000000; --panel: #000000; --ink: #ffffff; --muted: #9a9a9a; --line: #262626; --field: #0f0f0f;
-  --accent: #8052ff; --accent-ink: #ffffff; --label: #ffb829;
-  --wind: #c9c2ff; --pop: #a68aff; --fsw: #5b8cff; --bonus: #ff5cc8;
-  --tail-strong: #1fb38f; --tail: #63d3b4; --cross: #7a7a7a; --head: #ffb829; --head-strong: #ff6a3d;
+  --bg: #000000; --panel: #000000; --ink: #ffffff; --muted: #888b91; --line: #232427; --field: #1c1d1f;
+  --accent: #ffffff; --accent-ink: #000000; --label: #0088ff; --link: #60a5fa;
+  --wind: #9ecbff; --pop: #b855e7; --fsw: #0088ff; --bonus: #dd55e7;
+  --tail-strong: #16c253; --tail: #5fd98a; --cross: #70757c; --head: #ffb764; --head-strong: #e6714f;
   --casing: #000000; --tile-filter: invert(1) hue-rotate(180deg) brightness(.85) contrast(.9) saturate(.55);
   --f-display: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --f-body: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --f-mono: "Inter", ui-sans-serif, system-ui, sans-serif;
   color-scheme: dark;
 }
-body { font-weight: 300; font-feature-settings: "ss01" on, "tnum" on; }
+body { font-weight: 400; letter-spacing: -0.01em; font-feature-settings: "ss01" on, "cv11" on, "tnum" on; }
 .panel { border-right-color: var(--line); gap: 24px; }
-header .home { display: inline-flex; align-items: center; gap: 9px; color: var(--ink); text-decoration: none; font: 400 17px/1 var(--f-body); letter-spacing: -0.02em; margin-bottom: 24px; }
-header .home svg { width: 24px; height: 24px; }
-header .home:hover span { color: var(--label); }
-header .kicker { display: block; font: 600 13px/1.2 var(--f-body); letter-spacing: .025em; text-transform: uppercase; color: var(--label); margin-bottom: 10px; }
-header h1 { display: block; font: 400 clamp(34px, 3.3vw, 44px)/1.04 var(--f-display); letter-spacing: -0.04em; text-transform: none; }
-header p { font-weight: 300; color: #bdbdbd; margin-top: 12px; }
-.label, .aero-row, .mix-row, .stat small, .alts th { font-weight: 600; letter-spacing: .025em; color: var(--muted); }
-input[type=text], input[type=number], input[type=password], input[type=datetime-local] { font-weight: 400; border-radius: 12px; }
-.icon-btn, .seg, .ghost, .msg .diag button, .msg .diag code { border-radius: 12px; }
-.icon-btn:hover { border-color: var(--accent); color: var(--ink); }
-.seg label:has(input:checked), .opts button[aria-selected="true"] { background: var(--accent); color: #fff; }
-.opts button[aria-selected="true"] small { color: #fff; }
-.dist output, .aero-speed, .wind .speed, .stat b { font-weight: 400; letter-spacing: -0.03em; }
-.aero-name, .result h2 { font-weight: 400; text-transform: none; letter-spacing: -0.02em; }
+header { position: relative; flex: none; margin: -4px -4px 0; padding: 22px 22px 26px; border-radius: 24px; overflow: hidden;
+  background: linear-gradient(#000000 0.85%, #112d72 40%, #4b52aa 62%, #a887dc 88%, #e6c4e7 118%); box-shadow: rgba(255,255,255,.08) 0 0 0 1px inset; }
+header > * { position: relative; }
+header .home { display: inline-flex; align-items: center; gap: 8px; color: var(--ink); text-decoration: none; font: 500 15px/1 var(--f-body); letter-spacing: -0.02em; margin-bottom: 22px; padding: 6px 12px 6px 8px; border-radius: 9999px; background: rgba(15,15,16,.7); box-shadow: rgba(255,255,255,.12) 0 0 0 1px inset; }
+header .home svg { width: 20px; height: 20px; }
+header .home:hover span { color: #b8babf; }
+header .kicker { display: block; font: 500 13px/1.2 var(--f-body); letter-spacing: 0; text-transform: none; color: #9ecbff; margin-bottom: 10px; }
+header h1 { display: block; font: 500 clamp(32px, 3.1vw, 42px)/1.06 var(--f-display); letter-spacing: -0.055em; text-transform: none; }
+header p { font-weight: 400; color: rgba(255,255,255,.86); margin-top: 12px; }
+.label, .aero-row, .mix-row, .stat small, .alts th { font-weight: 500; letter-spacing: 0; color: var(--muted); }
+input[type=text], input[type=number], input[type=password], input[type=datetime-local] { font-weight: 400; border-radius: 9px; background: var(--field); border-color: rgba(255,255,255,.12); }
+.icon-btn, .seg, .ghost, .msg .diag button, .msg .diag code { border-radius: 9px; }
+.icon-btn:hover { border-color: rgba(255,255,255,.4); color: var(--ink); }
+.seg label:has(input:checked), .opts button[aria-selected="true"] { background: var(--accent); color: var(--accent-ink); }
+.opts button[aria-selected="true"] small { color: rgba(0,0,0,.6); }
+.dist output, .aero-speed, .wind .speed, .stat b { font-weight: 500; letter-spacing: -0.04em; }
+.aero-name, .result h2 { font-weight: 500; text-transform: none; letter-spacing: -0.03em; }
 .result h2 { font-size: 1.7rem; }
-.aero, .wind { border-radius: 24px; }
-.go { font: 600 14px/1 var(--f-body); letter-spacing: .025em; text-transform: uppercase; border-radius: 24px; padding: 16px 20px; }
-.go.small { font-size: 13px; border-radius: 24px; }
-.go:hover { filter: brightness(1.12); }
-.dl { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
-.dl:hover { border-color: var(--label); color: var(--label); filter: none; }
-.ghost:hover { border-color: var(--label); color: var(--label); }
-.fill { background: var(--accent); }
+.aero, .wind { border-radius: 24px; background: #001b33; border-color: rgba(255,255,255,.08); }
+.go { font: 500 15px/1 var(--f-body); letter-spacing: -0.01em; text-transform: none; border-radius: 9px; padding: 15px 18px; transition: background .15s; }
+.go.small { font-size: 14px; border-radius: 9px; }
+.go:hover { background: #e5e7eb; }
+.dl { background: #1c1d1f; color: var(--ink); border: 0; box-shadow: rgba(255,255,255,.15) 0 0 0 1px inset; }
+.dl:hover { background: #26272a; color: var(--ink); }
+.ghost:hover { border-color: rgba(255,255,255,.4); color: var(--ink); }
+.fill { background: linear-gradient(90deg, #112d72, #4b52aa, #a887dc, #e6c4e7); }
+.steps li[data-state=active]::before { border-color: var(--label); border-top-color: transparent; }
 .profile svg { border-radius: 12px; }
-.hours i { background: #3d3d3d; }
-.hours i.day { box-shadow: -1px 0 0 #6a6a6a; }
-.track, .half .bar { background: #262626; }
-.chip { border-color: var(--line); }
-summary { color: var(--ink); font-weight: 400; }
+.hours i { background: #333333; }
+.hours i.day { box-shadow: -1px 0 0 #595959; }
+.track, .half .bar { background: #232427; }
+.chip { border-color: var(--line); background: #0f0f10; }
+summary { color: var(--ink); font-weight: 500; }
 details { border-top-color: var(--line); }
-.map-say, .legend { border-radius: 12px; box-shadow: none; }
-a { color: var(--ink); }
+.map-say, .legend { border-radius: 12px; box-shadow: none; background: rgba(15,15,16,.92); }
+input:focus-visible, button:focus-visible, .seg label:has(input:focus-visible), summary:focus-visible, tr:focus-visible { outline-color: var(--label); }
+input[type=range], .check input { accent-color: var(--label); }
+a { color: var(--link); }
+header a { color: var(--ink); }
 footer a { color: var(--muted); }
-footer a:hover { color: var(--label); }
+footer a:hover { color: var(--ink); }
 </style>
 </head>
 <body>
 <div class="app">
   <aside class="panel">
-    <header>
+    <header data-cees>
       <a class="home" href="/" aria-label="Big C home">
-        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M22.5 9.5A9 9 0 1 0 22.5 22.5" fill="none" stroke="#8052ff" stroke-width="4" stroke-linecap="round"/><path d="M18.5 13.5A3.5 3.5 0 1 0 18.5 18.5" fill="none" stroke="#ffb829" stroke-width="2.6" stroke-linecap="round"/></svg>
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M22.5 9.5A9 9 0 1 0 22.5 22.5" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/><path d="M18.5 13.5A3.5 3.5 0 1 0 18.5 18.5" fill="none" stroke="#0088ff" stroke-width="2.6" stroke-linecap="round"/></svg>
         <span>Big C</span>
       </a>
       <span class="kicker">Wind optimizer</span>
@@ -2676,6 +2683,50 @@ $("#locate").addEventListener("click", () => {
 (async () => {
   try { const s = await geocode($("#start").value); pinned = s; setStartMarker(s.lat, s.lon); map.setView([s.lat, s.lon], 11); refreshWind(s.lat, s.lon); prefetchData(s.lat, s.lon); }
   catch (e) { $("#wMeta").textContent = "Set a start to see the wind."; }
+})();
+</script>
+<script>
+// Floating c's rising through the aurora header.
+(function () {
+  var host = document.querySelector("[data-cees]");
+  if (!host) return;
+  var cv = document.createElement("canvas");
+  cv.setAttribute("aria-hidden", "true");
+  cv.style.cssText = "position:absolute;inset:0;width:100%;height:100%;pointer-events:none";
+  host.insertBefore(cv, host.firstChild);
+  var ctx = cv.getContext("2d"), w = 0, h = 0, parts = [], run = false, raf = 0;
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var seed = 7; function rnd() { return (seed = (seed * 16807) % 2147483647) / 2147483647; }
+  function build() {
+    var r = cv.getBoundingClientRect(), d = Math.min(devicePixelRatio || 1, 2);
+    w = r.width; h = r.height; if (!w || !h) return;
+    cv.width = Math.round(w * d); cv.height = Math.round(h * d); ctx.setTransform(d, 0, 0, d, 0, 0);
+    seed = 7; parts = [];
+    var n = Math.round(Math.min(160, w * h / 1800));
+    for (var i = 0; i < n; i++) parts.push({ x: rnd() * w, y: rnd() * h, s: 1.6 + rnd() * 2.6, v: 0.12 + rnd() * 0.3, ph: rnd() * 6.28, a: 0.3 + rnd() * 0.45 });
+  }
+  function cee(x, y, s, r) { var a0 = r + 0.8; ctx.moveTo(x + Math.cos(a0) * s, y + Math.sin(a0) * s); ctx.arc(x, y, s, a0, r + Math.PI * 2 - 0.8); }
+  function draw(now) {
+    var t = now / 1000; ctx.clearRect(0, 0, w, h); ctx.lineWidth = 1.2; ctx.lineCap = "round";
+    var groups = {};
+    for (var i = 0; i < parts.length; i++) {
+      var p = parts[i];
+      if (!reduce) { p.y -= p.v; if (p.y < -6) { p.y = h + 6; } }
+      var low = p.y / h > 0.66;
+      var col = low ? (p.ph < 3.4 ? "#112d72" : "#4b52aa") : (p.ph < 2.2 ? "#ffffff" : p.ph < 4.4 ? "#60a5fa" : "#a887dc");
+      var key = col + "|" + (Math.round(p.a * 4) / 4);
+      (groups[key] = groups[key] || []).push([p.x + Math.sin(t * 0.6 + p.ph) * 3, p.y, p.s, (p.ph - 3.14) * 0.11 + Math.sin(t + p.ph) * 0.3]);
+    }
+    for (var k in groups) {
+      var bits = k.split("|"); ctx.strokeStyle = bits[0]; ctx.globalAlpha = +bits[1]; ctx.beginPath();
+      groups[k].forEach(function (q) { cee(q[0], q[1], q[2], q[3]); }); ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+    if (run && !reduce) raf = requestAnimationFrame(draw);
+  }
+  build(); draw(performance.now());
+  new ResizeObserver(function () { build(); draw(performance.now()); }).observe(cv);
+  new IntersectionObserver(function (e) { if (e[0].isIntersecting) { if (!run) { run = true; raf = requestAnimationFrame(draw); } } else { run = false; cancelAnimationFrame(raf); } }).observe(cv);
 })();
 </script>
 </body>
