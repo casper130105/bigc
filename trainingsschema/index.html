@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Big C: training schedule</title>
+<meta name="description" content="Put the OJZ training schedule (PDF) on your intervals.icu calendar in one go.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23a8413a'/%3E%3Cpath d='M6 12h14a4 4 0 1 0-4-4M6 18h18a4 4 0 1 1-4 4M6 24h8' fill='none' stroke='%23fff' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<style>
+:root {
+  --bg: #e9eeec; --panel: #f7f9f8; --ink: #15211e; --muted: #5a6a65; --line: #d2dbd8; --field: #ffffff;
+  --accent: #a8413a; --accent-ink: #ffffff; --ok: #0d7a5f; --row: #39a585; --ride: #2a6ccc; --gym: #7651c2; --race: #c5432b;
+  --f-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --f-body: "Barlow", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1513; --panel: #141c1a; --ink: #e3ebe8; --muted: #93a39d; --line: #26322f; --field: #1b2522;
+    --accent: #d9645a; --accent-ink: #1a0d0b; --ok: #2fc497; --row: #5fb79b; --ride: #6ea2f2; --gym: #a68ae8; --race: #ef6a4f;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e1513; --panel: #141c1a; --ink: #e3ebe8; --muted: #93a39d; --line: #26322f; --field: #1b2522;
+  --accent: #d9645a; --accent-ink: #1a0d0b; --ok: #2fc497; --row: #5fb79b; --ride: #6ea2f2; --gym: #a68ae8; --race: #ef6a4f;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.5 var(--f-body); -webkit-font-smoothing: antialiased; }
+.wrap { max-width: 980px; margin: 0 auto; padding: max(20px, env(safe-area-inset-top)) 16px 48px; }
+header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 20px; }
+h1 { display: flex; align-items: center; gap: 12px; margin: 0; font: 700 28px/1 var(--f-display); letter-spacing: .01em; }
+h1 svg { width: 36px; height: 36px; flex: none; }
+h1 small { display: block; font: 600 13px/1.2 var(--f-body); color: var(--muted); letter-spacing: .04em; text-transform: uppercase; margin-top: 3px; }
+header a { color: var(--muted); font-size: 14px; text-decoration: none; }
+header a:hover { color: var(--ink); }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+.step { display: flex; align-items: baseline; gap: 10px; margin: 0 0 12px; font: 700 20px/1.2 var(--f-display); }
+.step b { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: var(--accent-ink); font: 600 13px/1 var(--f-body); flex: none; transform: translateY(-2px); }
+p { margin: 0 0 12px; }
+.muted { color: var(--muted); }
+.drop { display: grid; place-items: center; text-align: center; gap: 6px; padding: 28px 16px; border: 2px dashed var(--line); border-radius: 10px; background: var(--field); cursor: pointer; transition: border-color .15s, background .15s; }
+.drop:hover, .drop.over { border-color: var(--accent); }
+.drop strong { font-weight: 600; }
+.drop input { display: none; }
+.summary { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 16px 0 8px; font-size: 14px; }
+.summary span b { font: 500 15px var(--f-mono); }
+.week { margin-top: 14px; }
+.week h3 { margin: 0 0 6px; font: 700 15px/1.2 var(--f-display); text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+.sess { display: grid; grid-template-columns: 22px 92px 1fr auto; gap: 4px 12px; align-items: start; padding: 9px 4px; border-top: 1px solid var(--line); }
+.sess:first-of-type { border-top: 0; }
+.sess input { margin: 3px 0 0; width: 16px; height: 16px; accent-color: var(--accent); }
+.sess .date { font: 500 13px/1.5 var(--f-mono); color: var(--muted); }
+.sess .name { font-weight: 600; }
+.sess .tag { display: inline-block; font: 600 11px/1 var(--f-body); text-transform: uppercase; letter-spacing: .05em; padding: 3px 6px; border-radius: 4px; margin-right: 6px; color: #fff; vertical-align: 1px; }
+.tag.Rowing { background: var(--row); } .tag.Ride { background: var(--ride); } .tag.WeightTraining { background: var(--gym); } .tag.Workout { background: var(--muted); } .tag.race { background: var(--race); }
+.sess .notes { grid-column: 3 / 5; color: var(--muted); font-size: 13.5px; white-space: pre-line; }
+.sess .dur { font: 500 13px/1.5 var(--f-mono); text-align: right; white-space: nowrap; }
+.sess.off { opacity: .45; }
+label.field { display: block; font-weight: 600; margin-bottom: 6px; }
+.keyrow { display: flex; gap: 8px; }
+input[type=password], input[type=text] { flex: 1; min-width: 0; font: 15px var(--f-mono); padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--field); color: var(--ink); }
+input:focus-visible, button:focus-visible, .drop:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.icon-btn { flex: none; width: 44px; border: 1px solid var(--line); border-radius: 8px; background: var(--field); color: var(--muted); cursor: pointer; display: grid; place-items: center; }
+.icon-btn svg { width: 20px; height: 20px; }
+.hint { font-size: 13px; color: var(--muted); margin-top: 6px; }
+.hint a { color: inherit; }
+.check { display: flex; gap: 10px; align-items: flex-start; margin-top: 12px; font-size: 14px; }
+.check input { margin-top: 3px; accent-color: var(--accent); width: 16px; height: 16px; flex: none; }
+.go { margin-top: 18px; width: 100%; padding: 14px; border: 0; border-radius: 10px; background: var(--accent); color: var(--accent-ink); font: 700 19px/1 var(--f-display); letter-spacing: .03em; cursor: pointer; }
+.go:disabled { opacity: .5; cursor: default; }
+.msg { margin-top: 14px; padding: 12px 14px; border-radius: 8px; border: 1px solid var(--line); background: var(--field); font-size: 14px; }
+.msg.ok { border-color: var(--ok); }
+.msg.err { border-color: var(--race); }
+.msg a { color: var(--accent); font-weight: 600; }
+.privacy { font-size: 13px; color: var(--muted); margin-top: 20px; }
+@media (max-width: 560px) {
+  .sess { grid-template-columns: 22px 1fr auto; }
+  .sess .date { grid-column: 2 / 4; }
+  .sess .main { grid-column: 2 / 3; }
+  .sess .notes { grid-column: 2 / 4; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="var(--accent)"/><path d="M6 12h14a4 4 0 1 0-4-4M6 18h18a4 4 0 1 1-4 4M6 24h8" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/></svg>
+      <span>Training schedule<small>PDF ‚Üí intervals.icu</small></span>
+    </h1>
+    <a href="/">Big C 2.0 ‚Üí</a>
+  </header>
+
+  <section class="card">
+    <h2 class="step"><b>1</b>Load the schedule</h2>
+    <label class="drop" id="drop" tabindex="0">
+      <input type="file" id="file" accept="application/pdf,.pdf">
+      <strong id="dropTitle">Drop the schedule PDF here</strong>
+      <span class="muted" id="dropSub">or click to choose a file</span>
+    </label>
+    <div id="preview" hidden>
+      <div class="summary" id="summary"></div>
+      <div id="weeks"></div>
+    </div>
+  </section>
+
+  <section class="card" id="syncCard" hidden>
+    <h2 class="step"><b>2</b>Send it to intervals.icu</h2>
+    <label class="field" for="key">Your intervals.icu API key</label>
+    <div class="keyrow">
+      <input type="password" id="key" autocomplete="off" spellcheck="false" placeholder="Paste your API key">
+      <button type="button" class="icon-btn" id="show" title="Show key" aria-label="Show key">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+      </button>
+    </div>
+    <div class="hint">Find it in <a href="https://intervals.icu/settings" target="_blank" rel="noopener">intervals.icu ‚Üí Settings</a> ‚Üí Developer Settings ‚Üí API key.</div>
+    <label class="check"><input type="checkbox" id="remember"> <span>Remember my key on this device</span></label>
+    <label class="check"><input type="checkbox" id="prune" checked> <span>Remove sessions from an earlier schedule that are no longer in this one</span></label>
+    <button class="go" id="go" disabled>Put on my calendar</button>
+    <div class="msg" id="msg" hidden></div>
+  </section>
+
+  <p class="privacy">Your PDF is read in your browser and your key goes only from your browser to intervals.icu. Nothing is sent to or stored on this site.</p>
+</div>
+
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+const API = "https://intervals.icu/api/v1/athlete/0";
+const PREFIX = "ojz-";
+const DAYS = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+const HEADER_RE = /^(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\/(\d{1,2})\/(\d{1,2})$/;
+// Rows of one week block: baseline offsets (pt) below the day header.
+const BANDS = { title1: [3, 12], desc1: [12, 34], dist1: [34, 40], title2: [40, 46.5], desc2: [46.5, 71], dist2: [71, 78] };
+const RACE_WORDS = ["hel van het noorden", "nkir", "wedstrijd", "regatta", "head of"];
+const REST_WORDS = ["vrij", "rust", "rustdag", "off"];
+const SPORT_LABEL = { Rowing: "Row", Ride: "Bike", WeightTraining: "Strength", Workout: "Other" };
+
+const $ = id => document.getElementById(id);
+let events = [];
+
+// ---------- parsing ----------
+function pad(n) { return String(n).padStart(2, "0"); }
+function iso(d) { return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`; }
+
+function resolveDate(weekday, day, month) {
+  const want = DAYS.indexOf(weekday.toLowerCase());
+  const y = new Date().getFullYear();
+  for (const year of [y, y + 1, y - 1]) {
+    const d = new Date(year, month - 1, day);
+    if (d.getMonth() === month - 1 && (d.getDay() + 6) % 7 === want) return d;
+  }
+  return new Date(y, month - 1, day);
+}
+
+function sportFor(title, slot) {
+  const t = title.toLowerCase();
+  if (t.includes("fiets") || t.includes("bike")) return "Ride";
+  if (t.split(/\s+/).includes("kt") || t.includes("kracht") || t.includes("omnium")) return "WeightTraining";
+  if (t.includes("hardlo") || /\brun/.test(t)) return "Run";
+  return slot === 1 ? "Rowing" : "Workout";
+}
+
+function textIn(items, x0, x1, top, bottom) {
+  const inside = items.filter(i => i.cx >= x0 && i.cx < x1 && i.y >= top && i.y < bottom);
+  inside.sort((a, b) => a.y - b.y || a.x - b.x);
+  const lines = [];
+  for (const it of inside) {
+    const last = lines[lines.length - 1];
+    if (last && Math.abs(last.y - it.y) < 1.5) last.parts.push(it.str);
+    else lines.push({ y: it.y, parts: [it.str] });
+  }
+  return lines.map(l => l.parts.join(" ").replace(/\s+/g, " ").trim()).filter(Boolean).join("\n");
+}
+
+function num(re, text) {
+  const m = text.match(re);
+  return m ? parseFloat(m[1].replace(",", ".")) : null;
+}
+
+async function parsePdf(buffer) {
+  const pdf = await pdfjsLib.getDocument({ data: buffer }).promise;
+  const sessions = [];
+  for (let p = 1; p <= pdf.numPages; p++) {
+    const page = await pdf.getPage(p);
+    const height = page.getViewport({ scale: 1 }).height;
+    const content = await page.getTextContent();
+    // Skip rotated text (the vertical "week 46" labels) and the weekly totals column labels.
+    const upright = i => Math.abs(i.transform[1]) < 0.01 && i.transform[0] > 0;
+    const items = content.items.filter(i => i.str && i.str.trim() && upright(i) && !/^week\s*\d+$/i.test(i.str.trim())).map(i => ({
+      str: i.str.trim(), x: i.transform[4], y: height - i.transform[5], cx: i.transform[4] + i.width / 2,
+    }));
+    const headers = items.filter(i => HEADER_RE.test(i.str));
+    if (!headers.length) continue;
+    const centers = [...new Set(headers.map(h => Math.round(h.cx)))].sort((a, b) => a - b);
+    const spacing = (centers[centers.length - 1] - centers[0]) / Math.max(centers.length - 1, 1);
+    for (const h of headers) {
+      const [, weekday, day, month] = h.str.match(HEADER_RE);
+      const date = resolveDate(weekday, +day, +month);
+      const x0 = h.cx - spacing / 2, x1 = h.cx + spacing / 2;
+      const cell = {};
+      for (const [k, [a, b]] of Object.entries(BANDS)) cell[k] = textIn(items, x0, x1, h.y + a, h.y + b);
+      for (const slot of [1, 2]) {
+        const title = cell[`title${slot}`].replace(/\s+/g, " ").trim();
+        const desc = cell[`desc${slot}`];
+        const dist = cell[`dist${slot}`];
+        const minutes = num(/(\d+(?:[.,]\d+)?)\s*min/, dist);
+        const km = num(/(\d+(?:[.,]\d+)?)\s*km/, dist);
+        if (!title && !desc && !minutes) continue;
+        if (!title && !minutes && REST_WORDS.includes(desc.trim().toLowerCase())) continue;
+        sessions.push({ date, slot, title: title || (slot === 1 ? "Training" : "Extra training"), desc, minutes, km });
+      }
+    }
+  }
+  sessions.sort((a, b) => a.date - b.date || a.slot - b.slot);
+  return sessions;
+}
+
+function toEvent(s) {
+  const sport = sportFor(s.title, s.slot);
+  const race = RACE_WORDS.some(w => s.title.toLowerCase().includes(w));
+  const name = sport === "WeightTraining" && /^kt\b/i.test(s.title) ? "Krachttraining" + s.title.slice(2) : s.title;
+  const lines = [];
+  if (s.desc) lines.push(s.desc);
+  const bits = [s.km ? `${s.km} km` : null, s.minutes ? `${s.minutes} min` : null].filter(Boolean);
+  if (bits.length) lines.push("Gepland: " + bits.join(" ¬∑ "));
+  lines.push("(uit trainingsschema OJZ)");
+  const d = iso(s.date);
+  const ev = {
+    category: race ? "RACE_A" : "WORKOUT",
+    start_date_local: `${d}T00:00:00`,
+    type: sport,
+    name,
+    description: lines.join("\n"),
+    external_id: `${PREFIX}${d}-${s.slot}`,
+  };
+  if (s.minutes) ev.moving_time = Math.round(s.minutes * 60);
+  if (s.km) ev.distance = s.km * 1000;
+  return { ev, notes: s.desc, date: s.date, on: true };
+}
+
+// ---------- preview ----------
+function weekNumber(d) {
+  const t = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  const day = t.getUTCDay() || 7;
+  t.setUTCDate(t.getUTCDate() + 4 - day);
+  return Math.ceil(((t - Date.UTC(t.getUTCFullYear(), 0, 1)) / 864e5 + 1) / 7);
+}
+const fmtDate = d => d.toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" });
+const esc = s => s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+function render() {
+  const chosen = events.filter(e => e.on);
+  const mins = chosen.reduce((a, e) => a + (e.ev.moving_time || 0) / 60, 0);
+  const km = chosen.reduce((a, e) => a + (e.ev.distance || 0) / 1000, 0);
+  $("summary").innerHTML =
+    `<span><b>${chosen.length}</b> sessions</span>` +
+    `<span><b>${fmtDate(events[0].date)}</b> ‚Äì <b>${fmtDate(events[events.length - 1].date)}</b></span>` +
+    `<span><b>${Math.round(km)}</b> km rowing</span>` +
+    `<span><b>${(mins / 60).toFixed(1)}</b> h total</span>`;
+  let html = "", wk = null;
+  events.forEach((e, i) => {
+    const w = weekNumber(e.date);
+    if (w !== wk) {
+      if (wk !== null) html += "</div>";
+      const mon = new Date(e.date); mon.setDate(mon.getDate() - (mon.getDay() + 6) % 7);
+      const sun = new Date(mon); sun.setDate(sun.getDate() + 6);
+      const f = d => d.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+      html += `<div class="week"><h3>${f(mon)} ‚Äì ${f(sun)}</h3>`;
+      wk = w;
+    }
+    const ev = e.ev, race = ev.category.startsWith("RACE");
+    const dur = [ev.distance ? `${ev.distance / 1000} km` : "", ev.moving_time ? `${ev.moving_time / 60} min` : ""].filter(Boolean).join(" ¬∑ ");
+    html += `<div class="sess${e.on ? "" : " off"}">
+      <input type="checkbox" data-i="${i}" ${e.on ? "checked" : ""} aria-label="Include ${esc(ev.name)}">
+      <span class="date">${fmtDate(e.date)}</span>
+      <span class="main"><span class="tag ${race ? "race" : ev.type}">${race ? "Race" : SPORT_LABEL[ev.type] || ev.type}</span><span class="name">${esc(ev.name)}</span></span>
+      <span class="dur">${dur}</span>
+      ${e.notes ? `<span class="notes">${esc(e.notes)}</span>` : ""}
+    </div>`;
+  });
+  $("weeks").innerHTML = html + "</div>";
+  updateGo();
+}
+
+$("weeks").addEventListener("change", e => {
+  const i = e.target.dataset.i;
+  if (i === undefined) return;
+  events[i].on = e.target.checked;
+  render();
+});
+
+async function loadFile(file) {
+  if (!file) return;
+  hideMsg();
+  $("dropTitle").textContent = file.name;
+  $("dropSub").textContent = "Reading‚Ä¶";
+  try {
+    const sessions = await parsePdf(await file.arrayBuffer());
+    if (!sessions.length) throw new Error("No sessions found. Is this the usual weekly schedule grid?");
+    events = sessions.map(toEvent);
+    $("dropSub").textContent = "Click to choose another file";
+    $("preview").hidden = false;
+    $("syncCard").hidden = false;
+    render();
+  } catch (err) {
+    events = [];
+    $("preview").hidden = true;
+    $("syncCard").hidden = true;
+    $("dropSub").textContent = "Couldn't read this PDF: " + (err.message || err);
+  }
+}
+
+const drop = $("drop");
+$("file").addEventListener("change", e => loadFile(e.target.files[0]));
+drop.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); $("file").click(); } });
+["dragenter", "dragover"].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.add("over"); }));
+["dragleave", "drop"].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.remove("over"); }));
+drop.addEventListener("drop", e => loadFile(e.dataTransfer.files[0]));
+
+// ---------- sync ----------
+const store = {
+  get() { try { return localStorage.getItem("intervalsKey") || ""; } catch { return ""; } },
+  set(v) { try { v ? localStorage.setItem("intervalsKey", v) : localStorage.removeItem("intervalsKey"); } catch {} },
+};
+const saved = store.get();
+if (saved) { $("key").value = saved; $("remember").checked = true; }
+
+function updateGo() { $("go").disabled = !$("key").value.trim() || !events.some(e => e.on); }
+$("key").addEventListener("input", updateGo);
+$("show").addEventListener("click", () => { const k = $("key"); k.type = k.type === "password" ? "text" : "password"; });
+
+function showMsg(html, kind) { const m = $("msg"); m.innerHTML = html; m.className = "msg " + (kind || ""); m.hidden = false; }
+function hideMsg() { $("msg").hidden = true; }
+
+async function call(key, method, path, body) {
+  let res;
+  try {
+    res = await fetch(API + path, {
+      method,
+      headers: { Authorization: "Basic " + btoa("API_KEY:" + key), "Content-Type": "application/json", Accept: "application/json" },
+      body: body ? JSON.stringify(body) : undefined,
+    });
+  } catch {
+    throw new Error("Couldn't reach intervals.icu. Check your internet connection and try again.");
+  }
+  if (res.status === 401 || res.status === 403) throw new Error("intervals.icu doesn't accept this API key. Copy it again from Settings ‚Üí Developer Settings.");
+  if (!res.ok) throw new Error(`intervals.icu returned error ${res.status}.`);
+  const text = await res.text();
+  return text ? JSON.parse(text) : null;
+}
+
+$("go").addEventListener("click", async () => {
+  const key = $("key").value.trim();
+  const chosen = events.filter(e => e.on).map(e => e.ev);
+  if (!key || !chosen.length) return;
+  store.set($("remember").checked ? key : "");
+  $("go").disabled = true;
+  try {
+    showMsg("Checking your key‚Ä¶");
+    const athlete = await call(key, "GET", "");
+    showMsg(`Sending ${chosen.length} sessions to ${esc(athlete.name || "your account")}‚Ä¶`);
+    await call(key, "POST", "/events/bulk?upsert=true", chosen);
+    let removed = 0;
+    if ($("prune").checked) {
+      const keep = new Set(chosen.map(e => e.external_id));
+      const first = iso(events[0].date), last = iso(events[events.length - 1].date);
+      const existing = await call(key, "GET", `/events?oldest=${first}&newest=${last}`) || [];
+      for (const ev of existing) {
+        const ext = ev.external_id || "";
+        if (ext.startsWith(PREFIX) && !keep.has(ext)) { await call(key, "DELETE", `/events/${ev.id}`); removed++; }
+      }
+    }
+    const extra = removed ? ` Removed ${removed} old session${removed === 1 ? "" : "s"}.` : "";
+    showMsg(`‚úì ${chosen.length} sessions are on ${esc(athlete.name || "your")}'s calendar.${extra} <a href="https://intervals.icu/calendar" target="_blank" rel="noopener">Open intervals.icu ‚Üí</a>`, "ok");
+  } catch (err) {
+    showMsg(esc(err.message || String(err)), "err");
+  } finally {
+    updateGo();
+  }
+});
+</script>
+</body>
+</html>
