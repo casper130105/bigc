@@ -6,7 +6,7 @@
 <title>Big C</title>
 <meta name="description" content="Big C: plan a road-bike loop with headwind out and tailwind home, and put your club's training schedule on intervals.icu.">
 <meta name="theme-color" content="#000000">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23000'/%3E%3Cpath d='M22.5 9.5A9 9 0 1 0 22.5 22.5' fill='none' stroke='%238052ff' stroke-width='4' stroke-linecap='round'/%3E%3Cpath d='M23 13l5 3-5 3z' fill='%23ffb829'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23000'/%3E%3Cpath d='M22.5 9.5A9 9 0 1 0 22.5 22.5' fill='none' stroke='%238052ff' stroke-width='4' stroke-linecap='round'/%3E%3Cpath d='M18.5 13.5A3.5 3.5 0 1 0 18.5 18.5' fill='none' stroke='%23ffb829' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;600&display=swap">
@@ -55,7 +55,7 @@ h2 { font: 400 clamp(40px, 5.6vw, 78px)/1.05 var(--font); letter-spacing: -0.04e
 .feature p { color: var(--mist); max-width: 520px; margin: 0 0 30px; }
 .feature .viz { aspect-ratio: 4 / 3; }
 .facts { list-style: none; padding: 0; margin: 0 0 36px; display: grid; gap: 6px; font: 400 15px/1.4 var(--font); color: var(--ash); }
-.facts li::before { content: ""; display: inline-block; width: 0; height: 0; border-left: 7px solid var(--saffron); border-top: 4.5px solid transparent; border-bottom: 4.5px solid transparent; margin-right: 12px; vertical-align: 1px; }
+.facts li::before { content: ""; display: inline-block; width: 9px; height: 9px; border: 1.6px solid var(--saffron); border-right-color: transparent; border-radius: 50%; margin-right: 12px; vertical-align: 0; }
 
 footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding: 60px 0 max(36px, env(safe-area-inset-bottom)); font: 400 14px/1.4 var(--font); color: var(--ash); }
 footer a { text-decoration: none; } footer a:hover { color: var(--white); }
@@ -72,7 +72,7 @@ footer a { text-decoration: none; } footer a:hover { color: var(--white); }
 <div class="page">
   <nav aria-label="Main">
     <a class="logo" href="/" aria-label="Big C home">
-      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M22.5 9.5A9 9 0 1 0 22.5 22.5" fill="none" stroke="#8052ff" stroke-width="4" stroke-linecap="round"/><path d="M23 13l5 3-5 3z" fill="#ffb829"/></svg>
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M22.5 9.5A9 9 0 1 0 22.5 22.5" fill="none" stroke="#8052ff" stroke-width="4" stroke-linecap="round"/><path d="M18.5 13.5A3.5 3.5 0 1 0 18.5 18.5" fill="none" stroke="#ffb829" stroke-width="2.6" stroke-linecap="round"/></svg>
       Big C
     </a>
     <div class="links">
@@ -133,7 +133,7 @@ footer a { text-decoration: none; } footer a:hover { color: var(--white); }
 </div>
 
 <script>
-// Constellation: small outlined triangles drifting around points sampled from a shape.
+// Constellation: small outlined c's drifting around points sampled from a shape.
 (() => {
   const COLORS = ["#8052ff", "#a68aff", "#ffb829", "#15846e", "#2fc4a0", "#ff5cc8", "#5b8cff", "#ffffff"];
   const WEIGHTS = [5, 3, 3, 2, 2, 1.4, 2, 0.6];
@@ -218,8 +218,8 @@ footer a { text-decoration: none; } footer a:hover { color: var(--white); }
       parts = SHAPES[kind](n, rnd, h / w).map(p => ({
         ...p,
         s: ((p.amb ? 1.6 : 2) + rnd() * (p.amb ? 2.2 : 3.4)) * (kind === "grid" ? 0.7 : 1),
-        rot: rnd() * Math.PI * 2,
-        spin: (rnd() - 0.5) * 0.01,
+        rot: (rnd() - 0.5) * 0.7,          // small tilt so every mark still reads as a "c"
+        spin: 0.4 + rnd() * 0.9,           // wobble speed
         drift: 0.004 + rnd() * 0.01,
         ph: rnd() * Math.PI * 2,
         color: p.color || pickColor(rnd),
@@ -228,17 +228,17 @@ footer a { text-decoration: none; } footer a:hover { color: var(--white); }
       }));
     }
 
-    function tri(x, y, s, r) {
-      ctx.moveTo(x + Math.cos(r) * s, y + Math.sin(r) * s);
-      ctx.lineTo(x + Math.cos(r + 2.094) * s, y + Math.sin(r + 2.094) * s);
-      ctx.lineTo(x + Math.cos(r + 4.189) * s, y + Math.sin(r + 4.189) * s);
-      ctx.closePath();
+    // A small open "c": an arc with its gap facing right (rotated by r).
+    function cee(x, y, s, r) {
+      const a0 = r + 0.8, a1 = r + Math.PI * 2 - 0.8;
+      ctx.moveTo(x + Math.cos(a0) * s, y + Math.sin(a0) * s);
+      ctx.arc(x, y, s, a0, a1);
     }
 
     function draw(now) {
       const t = (now - t0) / 1000;
       ctx.clearRect(0, 0, w, h);
-      ctx.lineWidth = 1.1;
+      ctx.lineWidth = 1.25; ctx.lineCap = "round";
       const byColor = new Map();
       for (const p of parts) {
         let x, y;
@@ -256,16 +256,16 @@ footer a { text-decoration: none; } footer a:hover { color: var(--white); }
         const tx = d2 < 9000 ? dx / Math.sqrt(d2 + 1) * (9000 - d2) / 300 : 0;
         const ty = d2 < 9000 ? dy / Math.sqrt(d2 + 1) * (9000 - d2) / 300 : 0;
         p.ox += (tx - p.ox) * 0.08; p.oy += (ty - p.oy) * 0.08;
-        p.rot += reduce ? 0 : p.spin;
+        const r = p.rot + (reduce ? 0 : Math.sin(t * p.spin + p.ph) * 0.35);
         const key = p.color + "|" + (Math.round(p.alpha * 4) / 4);
         if (!byColor.has(key)) byColor.set(key, []);
-        byColor.get(key).push([x + p.ox, y + p.oy, p.s, p.rot]);
+        byColor.get(key).push([x + p.ox, y + p.oy, p.s, r]);
       }
       for (const [key, list] of byColor) {
         const [color, a] = key.split("|");
         ctx.strokeStyle = color; ctx.globalAlpha = +a;
         ctx.beginPath();
-        for (const [x, y, s, r] of list) tri(x, y, s, r);
+        for (const [x, y, s, r] of list) cee(x, y, s, r);
         ctx.stroke();
       }
       ctx.globalAlpha = 1;
